@@ -1,8 +1,10 @@
 package com.esliceu.buckets.controllers;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
@@ -25,6 +27,12 @@ public class AppController {
     @GetMapping("/register")
     public String register(){
 
+        return "register";
+    }
+    @PostMapping("/register")
+    public String register(HttpServletRequest req) {
+
+        req.getParameter("");
         return "register";
     }
 }
