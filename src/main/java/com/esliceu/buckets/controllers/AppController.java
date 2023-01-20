@@ -14,7 +14,7 @@ import java.util.List;
 public class AppController {
 
     @GetMapping("/")
-    public String test(Model model){
+    public String homepage(Model model){
 
         return "homepage";
     }
@@ -32,7 +32,11 @@ public class AppController {
     @PostMapping("/register")
     public String register(HttpServletRequest req) {
 
-        req.getParameter("");
+        req.getParameter("nickname");
+        req.getParameter("email");
+        req.getParameter("password");
+        req.getParameter("name");
+        req.getParameter("surnames");
         return "register";
     }
 }
