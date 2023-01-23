@@ -23,8 +23,8 @@ public class RegisterDAOImpl implements RegisterDAO {
     };
     @Override
     public void register(String nickname, String email, String password, String name, String surnames) {
-        jdbcTemplate.update("INSERT INTO users (nickname, email, password, name, surnames) VALUES (?, ?, ?, ?, ?, ?)",
-                userRowMapper);
+        jdbcTemplate.update("INSERT INTO users (nickname, email, password, name, surnames) VALUES (?, ?, ?, ?, ?)",
+                nickname, email, password, name, surnames);
     }
 
 }
