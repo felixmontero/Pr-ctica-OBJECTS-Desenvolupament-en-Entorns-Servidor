@@ -1,27 +1,18 @@
-package com.esliceu.buckets.forms;
+package com.esliceu.buckets.models;
 
-import jakarta.validation.constraints.Email;
-import org.hibernate.validator.constraints.Length;
+public class User {
 
-public class RegisterForm {
-    @Length(min = 5,max = 15)
-    String nickname;
-    @Email
-    String email;
-    @Length(min = 5, max = 15)
-    String password;
-    @Length(min = 5, max = 15)
-    String password2;
-    @Length(min = 3, max = 15)
-    String name;
-    @Length(min = 5, max = 30)
-    String surnames;
+    private String nickname;
+    private String email;
+    private String password;
+    private String name;
+    private String surnames;
 
     public String getNickname() {
         return nickname;
     }
 
-    public void setNickname(String username) {
+    public void setNickname(String nickname) {
         this.nickname = nickname;
     }
 
@@ -55,13 +46,5 @@ public class RegisterForm {
 
     public void setSurnames(String surnames) {
         this.surnames = surnames;
-    }
-
-    public String getPassword2() {
-        return password2;
-    }
-
-    public void setPassword2(String password2) {
-        this.password2 = password2;
     }
 }
