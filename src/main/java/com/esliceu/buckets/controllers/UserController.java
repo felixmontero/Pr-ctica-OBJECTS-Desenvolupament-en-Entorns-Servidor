@@ -2,6 +2,7 @@ package com.esliceu.buckets.controllers;
 
 import com.esliceu.buckets.services.UserService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,9 +35,8 @@ public class UserController {
         return "signup";
     }
     @PostMapping("/signup")
-    public String register(HttpServletRequest req) {
-        userService.register(req.getParameter("nickname"), req.getParameter("email"),
-                req.getParameter("password"), req.getParameter("name"), req.getParameter("surnames"));
+    public String register(@Valid String nickname, String email, String password, String name, String surnames){
+        userService.register(nickname, email, password, name, surnames);
         return "signup";
     }
 }

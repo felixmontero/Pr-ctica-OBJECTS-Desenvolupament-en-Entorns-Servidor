@@ -4,9 +4,9 @@ import jakarta.validation.constraints.Email;
 import org.hibernate.validator.constraints.Length;
 
 public class LoginForm {
-    @Length(min = 5, max = 15)
+    //@Length(min = 5, max = 15)
     private String nickname;
-    @Length(min = 5, max = 15)
+    //@Length(min = 5, max = 15)
     private String password;
 
     public String getNickname() {
