@@ -4,17 +4,17 @@ import jakarta.validation.constraints.Email;
 import org.hibernate.validator.constraints.Length;
 
 public class RegisterForm {
-   // @Length(min = 5,max = 15)
+    @Length(min = 5,max = 15)
     String nickname;
-    //@Email
+    @Email
     String email;
-    //@Length(min = 5, max = 15)
+    @Length(min = 5, max = 15)
     String password;
-   // @Length(min = 5, max = 15)
+    @Length(min = 5, max = 15)
     String password2;
-    //@Length(min = 3, max = 15)
+    @Length(min = 3, max = 15)
     String name;
-    //@Length(min = 5, max = 30)
+    @Length(min = 5, max = 30)
     String surnames;
 
     public String getNickname() {

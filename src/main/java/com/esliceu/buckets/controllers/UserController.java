@@ -5,9 +5,11 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Repository;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class UserController {
@@ -24,9 +26,10 @@ public class UserController {
         return "login";
     }
     @PostMapping("/login")
-    public String login(HttpServletRequest req){
-        userService.login(req.getParameter("email"), req.getParameter("password"));
-        return "login";
+    public String login(@RequestParam String nickname, @RequestParam String password){
+        userService.login(nickname, password);
+        System.out.printf("nickname:"+nickname+" password:"+password);
+        return "objects";
     }
 
     @GetMapping("/signup")

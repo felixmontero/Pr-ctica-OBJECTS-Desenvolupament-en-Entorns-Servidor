@@ -6,6 +6,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public class LoginDAOImpl implements LoginDAO{
 
@@ -23,7 +25,9 @@ public class LoginDAOImpl implements LoginDAO{
         return user;
     };
     @Override
-    public void login(String nickname, String password){
-        jdbcTemplate.update("SELECT * FROM users WHERE nickname = ?", userRowMapper);
+    public List<User> getUser(String nickname, String password){
+        return jdbcTemplate.query("SELECT * FROM users WHERE nickname = (?) AND password = (?)",
+               new Object[]{ nickname, password}, userRowMapper);
+
     }
 }
