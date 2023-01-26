@@ -6,21 +6,30 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 @Repository
-public class RegisterDAOImpl implements RegisterDAO {
+public class UserDAOImpl implements UserDAO{
+
     @Autowired
     JdbcTemplate jdbcTemplate;
 
     private final RowMapper<User> userRowMapper = (rs, rn) -> {
         User user = new User();
-           user.setNickname(rs.getString("nickname"));
-           user.setEmail(rs.getString("email"));
-           user.setPassword(rs.getString("password"));
-           user.setName(rs.getString("name"));
-           user.setSurnames(rs.getString("surnames"));
+        user.setNickname(rs.getString("nickname"));
+        user.setEmail(rs.getString("email"));
+        user.setPassword(rs.getString("password"));
+        user.setName(rs.getString("name"));
+        user.setSurnames(rs.getString("surnames"));
 
-           return user;
+        return user;
     };
+    @Override
+    public List<User> getUser(String nickname, String password){
+        return jdbcTemplate.query("SELECT * FROM users WHERE nickname = (?) AND password = (?)",
+                new Object[]{ nickname, password}, userRowMapper);
+
+    }
+
     @Override
     public void register(String nickname, String email, String password, String name, String surnames) {
         jdbcTemplate.update("INSERT INTO users (nickname, email, password, name, surnames) VALUES (?, ?, ?, ?, ?)",
@@ -28,4 +37,3 @@ public class RegisterDAOImpl implements RegisterDAO {
     }
 
 }
-

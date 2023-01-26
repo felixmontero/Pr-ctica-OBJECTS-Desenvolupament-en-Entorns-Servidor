@@ -4,7 +4,9 @@ import com.esliceu.buckets.models.User;
 
 import java.util.List;
 
-public interface LoginDAO {
+public interface UserDAO {
 
     List<User> getUser(String email, String password);
+
+    void register(String nickname, String email, String password, String name, String surnames);
 }
