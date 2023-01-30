@@ -1,6 +1,7 @@
 package com.esliceu.buckets.daos;
 
 import com.esliceu.buckets.models.User;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -36,4 +37,9 @@ public class UserDAOImpl implements UserDAO{
                 nickname, email, password, name, surnames);
     }
 
+    @Override
+    public List<User> checkUser(String nickname) {
+       return jdbcTemplate.query("SELECT * FROM users WHERE nickname = (?) ",
+               new Object[]{ nickname}, userRowMapper);
+    }
 }

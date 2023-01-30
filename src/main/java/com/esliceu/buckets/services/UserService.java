@@ -2,6 +2,7 @@ package com.esliceu.buckets.services;
 
 import com.esliceu.buckets.daos.UserDAO;
 import com.esliceu.buckets.models.User;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,12 +20,14 @@ public class UserService {
         userDAO.register(nickname, email, password, name, surnames);
     }
 
-    public void login(String email, String password) {
+    public boolean login(String email, String password) {
        List<User> users= userDAO.getUser(email, password);
        if(users.isEmpty()){
            System.out.println("No existeix l'usuari");
+           return false;
          }else {
            System.out.println("Usuari trobat");
+           return true;
          }
     }
 
@@ -45,9 +48,11 @@ public class UserService {
         for(byte b : hash) {
             sb.append(String.format("%02x", b));
         }
-
         return sb.toString();
 
     }
 
+    public List<User> checkUser(String nickname){
+        return userDAO.checkUser(nickname);
+    }
 }

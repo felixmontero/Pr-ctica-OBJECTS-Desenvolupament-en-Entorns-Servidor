@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Settings</title>
+</head>
+<body>
+    <a href="/">Homepage</a>
+    <a href="/objects">Objects</a>
+    <a href="/settings">Settings</a>
+    <a href="/logout">Logout</a>
+    <h1>Settings</h1>
+    <form action="/settings" method="post">
+        <p th:text="${user.nickname}"></p>
+        <label for="email">Email:</label>
+        <input type="email" name="email" id="email" th:value="${user.email}">
+
+        <input type="submit" value="Save">
+    </form>
+</body>
+</html>
