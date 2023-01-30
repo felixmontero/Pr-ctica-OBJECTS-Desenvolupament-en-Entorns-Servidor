@@ -66,25 +66,5 @@ public class UserController {
         return "settings";
     }
 
-    /*@GetMapping("/objects/{bucket}/**")
-    public getObjects(@RequestParam String bucket, HttpServletRequest req){
-        String path = req.getAttribute(
-                HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE;
-        );
 
-        return "objects";
-    }
-    */
-
-    // create a method to download a file
-    /*@GetMapping("/download")
-    public ResponseEntity<byte[]> download(HttpServletRequest request) {
-        byte[] content = file.getContent();
-        String name = obj.getName();
-        HttpHeaders headers = new HttpHeaders();
-        headers.getContentType(MediaType.Value.of("application/octet-stream"));
-        headers.setContentLength(content.length);
-        headers.set("Content-Disposition", "attachment; filename=" + name);
-        return new ResponseEntity<>(content, headers, HttpStatus.OK);
-    }*/
 }

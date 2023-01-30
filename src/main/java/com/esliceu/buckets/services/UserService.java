@@ -1,6 +1,8 @@
 package com.esliceu.buckets.services;
 
+import com.esliceu.buckets.daos.BucketDAO;
 import com.esliceu.buckets.daos.UserDAO;
+import com.esliceu.buckets.models.Bucket;
 import com.esliceu.buckets.models.User;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,7 @@ public class UserService {
 
     @Autowired
     UserDAO userDAO;
+
 
     public void register(String nickname, String email, String password,String name, String surnames) {
         userDAO.register(nickname, email, password, name, surnames);
@@ -52,7 +55,7 @@ public class UserService {
 
     }
 
-    public List<User> checkUser(String nickname){
+    public List<User> checkUser(String nickname) {
         return userDAO.checkUser(nickname);
     }
 }
