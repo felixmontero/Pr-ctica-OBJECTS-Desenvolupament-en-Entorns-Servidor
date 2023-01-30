@@ -24,9 +24,9 @@ public class BucketDAOImpl implements BucketDAO{
     };
 
     @Override
-    public void createBucket(String name, String owner, Date createDate) {
-        jdbcTemplate.update("INSERT INTO bucket (name, owner, createDate) VALUES (?,?,?)",
-                name, owner, createDate);
+    public void createBucket(String nom, String owner, Date createDate) {
+        jdbcTemplate.update("INSERT INTO bucket (nom, owner, createDate) VALUES (?,?,?)",
+                nom, owner, createDate);
     }
 
     @Override

@@ -1,11 +1,16 @@
 package com.esliceu.buckets.controllers;
 
+import com.esliceu.buckets.models.Bucket;
 import com.esliceu.buckets.services.BucketService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
 
 @Controller
 public class BucketController {
@@ -15,10 +20,18 @@ public class BucketController {
     @GetMapping("/objects")
     public String getObjects(HttpSession session, Model model){
        String nickname =(String) session.getAttribute("nickname");
-        model.addAttribute("objects", bucketService.getBuckets(nickname));
+       List<Bucket> buckets = bucketService.getBuckets(nickname);
+        System.out.println(buckets.size());
+        model.addAttribute("buckets", buckets);
         return "objects";
     }
 
+    @PostMapping("/objects")
+    public String createBucket(@RequestParam String name, HttpSession session){
+        String nickname =(String) session.getAttribute("nickname");
+        bucketService.createBucket(name, nickname);
+        return "redirect:/objects";
+    }
 
 
 /*@GetMapping("/objects/{bucket}/**")
