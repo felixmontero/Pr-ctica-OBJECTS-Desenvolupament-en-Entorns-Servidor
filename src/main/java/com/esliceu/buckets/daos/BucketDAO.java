@@ -15,5 +15,5 @@ public interface BucketDAO {
 
     List<Bucket> getBuckets(String nickname);
 
-    List<Object> getObjects(int bucket);
+    List<Bucket> getBucketByName(String name);
 }

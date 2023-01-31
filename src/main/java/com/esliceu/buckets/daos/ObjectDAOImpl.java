@@ -1,6 +1,6 @@
 package com.esliceu.buckets.daos;
 
-import com.esliceu.buckets.models.Object;
+import com.esliceu.buckets.models.Objecte;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -12,8 +12,8 @@ public class ObjectDAOImpl implements ObjectDAO {
     @Autowired
     JdbcTemplate jdbcTemplate;
 
-    private final RowMapper<Object> bucketRowMapper = (rs, rn) -> {
-        Object object = new Object();
+    private final RowMapper<Objecte> objectRowMapper = (rs, rn) -> {
+        Objecte object = new Objecte();
         object.setId(rs.getInt("id"));
         object.setName(rs.getString("nom"));
         object.setBucket(rs.getInt("bucket"));
@@ -38,8 +38,8 @@ public class ObjectDAOImpl implements ObjectDAO {
     }
 
     @Override
-    public List<Object> getObjects(int bucket) {
-        return jdbcTemplate.query("SELECT * FROM object WHERE bucket = (?)",
-                bucketRowMapper, bucket);
+    public List<Objecte> getObjects(int bucket) {
+        return jdbcTemplate.query("SELECT * FROM object WHERE bucketObject = (?)",
+                new Object[]{bucket}, objectRowMapper);
     }
 }

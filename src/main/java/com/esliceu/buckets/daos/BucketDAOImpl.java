@@ -47,8 +47,11 @@ public class BucketDAOImpl implements BucketDAO{
     }
 
     @Override
-    public List<Object> getObjects(int bucket) {
-        return null;
+    public List<Bucket> getBucketByName(String name) {
+        return jdbcTemplate.query("SELECT * FROM bucket WHERE nom = (?)",
+                new Object[]{name}, bucketRowMapper);
     }
+
+
 
 }

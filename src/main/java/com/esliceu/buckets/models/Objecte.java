@@ -1,14 +1,14 @@
 package com.esliceu.buckets.models;
 
-public class Object {
+public class Objecte {
 
     private int id;
     private String name;
     private int bucket;
 
-    public Object() {
+    public Objecte() {
     }
-    public Object(int id, String name, int bucket) {
+    public Objecte(int id, String name, int bucket) {
         this.id = id;
         this.name = name;
         this.bucket = bucket;

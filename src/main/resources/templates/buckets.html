@@ -22,7 +22,7 @@
 
             </tr>
             <tr th:each="bucket : ${buckets}">
-                <td><a th:href="@{objects/{bucket} (bucket=${bucket.id})}">[[${bucket.nom}]]</a></td>
+                <td><a th:href="@{objects/{bucket} (bucket=${bucket.nom})}">[[${bucket.nom}]]</a></td>
                 <td th:text="${bucket.createDate}"></td>
             </tr>
         </table>

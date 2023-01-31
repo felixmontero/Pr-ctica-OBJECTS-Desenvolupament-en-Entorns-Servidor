@@ -1,6 +1,7 @@
 package com.esliceu.buckets.controllers;
 
 import com.esliceu.buckets.models.Bucket;
+import com.esliceu.buckets.models.Objecte;
 import com.esliceu.buckets.services.BucketService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,6 @@ public class BucketController {
     public String getObjects(HttpSession session, Model model){
        String nickname =(String) session.getAttribute("nickname");
        List<Bucket> buckets = bucketService.getBuckets(nickname);
-        System.out.println(buckets.size());
         model.addAttribute("buckets", buckets);
         return "buckets";
     }
@@ -31,13 +31,14 @@ public class BucketController {
     public String createBucket(@RequestParam String name, HttpSession session){
         String nickname =(String) session.getAttribute("nickname");
         bucketService.createBucket(name, nickname);
-        return "redirect:/buckets";
+        return "redirect:/objects";
     }
 
     @GetMapping("/objects/{bucket}")
-    public String getObjects(@PathVariable int bucket, Model model){
-        List<Object> objects = bucketService.getObjects(bucket);
-        model.addAttribute("objects", objects);
+    public String getObjects(@PathVariable String bucket, Model model){
+
+        //List<Objecte> objects = bucketService.getObjects(bucket);
+        //model.addAttribute("objects", objects);
         return "objects";
     }
 

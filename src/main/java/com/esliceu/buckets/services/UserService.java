@@ -26,10 +26,8 @@ public class UserService {
     public boolean login(String email, String password) {
        List<User> users= userDAO.getUser(email, password);
        if(users.isEmpty()){
-           System.out.println("No existeix l'usuari");
            return false;
          }else {
-           System.out.println("Usuari trobat");
            return true;
          }
     }
