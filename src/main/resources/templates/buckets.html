@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Objects</title>
+    </head>
+    <body>
+        <h1>Buckets</h1>
+
+        <a href="/">Homepage</a><br>
+
+        <form action="/objects" method="post">
+            <label for="name">Name:</label>
+            <input type="text" name="name" id="name">
+            <input type="submit" value="Create">
+        </form>
+
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Create Date</th>
+
+            </tr>
+            <tr th:each="bucket : ${buckets}">
+                <td><a th:href="@{objects/{bucket} (bucket=${bucket.id})}">[[${bucket.nom}]]</a></td>
+                <td th:text="${bucket.createDate}"></td>
+            </tr>
+        </table>
+    </body>
+</html>

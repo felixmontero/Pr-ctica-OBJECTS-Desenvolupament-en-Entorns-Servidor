@@ -5,7 +5,7 @@
     <title>Objects</title>
 </head>
 <body>
-    <h1>Buckets</h1>
+    <h1>Objects</h1>
 
     <a href="/">Homepage</a><br>
 
@@ -21,11 +21,9 @@
             <th>Create Date</th>
 
         </tr>
-        <tr th:each="bucket : ${buckets}">
-           <!-- <a th:href="/objects/${bucket.id}">--> <td th:text="${bucket.nom}"></td></a>
-            <td th:text="${bucket.createDate}"></td>
-            <td></td>
-            <td></td>
+        <tr th:each="object : ${objects}">
+            <td>[[${bucket.nom}]]</td>
+            <td th:text="${object.createDate}"></td>
         </tr>
     </table>
 </body>

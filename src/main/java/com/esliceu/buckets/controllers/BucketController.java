@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -23,22 +24,23 @@ public class BucketController {
        List<Bucket> buckets = bucketService.getBuckets(nickname);
         System.out.println(buckets.size());
         model.addAttribute("buckets", buckets);
-        return "objects";
+        return "buckets";
     }
 
     @PostMapping("/objects")
     public String createBucket(@RequestParam String name, HttpSession session){
         String nickname =(String) session.getAttribute("nickname");
         bucketService.createBucket(name, nickname);
-        return "redirect:/objects";
+        return "redirect:/buckets";
     }
 
     @GetMapping("/objects/{bucket}")
-    public String getObjects(@RequestParam int bucket, Model model){
+    public String getObjects(@PathVariable int bucket, Model model){
         List<Object> objects = bucketService.getObjects(bucket);
         model.addAttribute("objects", objects);
         return "objects";
     }
+
 
 /*@GetMapping("/objects/{bucket}/**")
     public getObjects(@RequestParam String bucket, HttpServletRequest req){
