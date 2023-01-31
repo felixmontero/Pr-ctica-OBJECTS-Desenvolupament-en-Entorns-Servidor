@@ -22,7 +22,7 @@
 
         </tr>
         <tr th:each="bucket : ${buckets}">
-            <td th:text="${bucket.nom}"></td>
+           <!-- <a th:href="/objects/${bucket.id}">--> <td th:text="${bucket.nom}"></td></a>
             <td th:text="${bucket.createDate}"></td>
             <td></td>
             <td></td>

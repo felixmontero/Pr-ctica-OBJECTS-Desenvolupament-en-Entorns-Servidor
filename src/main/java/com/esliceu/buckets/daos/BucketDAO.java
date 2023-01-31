@@ -14,4 +14,6 @@ public interface BucketDAO {
     void updateBucket(int id, String name, String owner, Date createDate);
 
     List<Bucket> getBuckets(String nickname);
+
+    List<Object> getObjects(int bucket);
 }

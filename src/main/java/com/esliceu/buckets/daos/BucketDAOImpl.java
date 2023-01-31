@@ -46,5 +46,9 @@ public class BucketDAOImpl implements BucketDAO{
                 new Object[]{nickname}, bucketRowMapper);
     }
 
+    @Override
+    public List<Object> getObjects(int bucket) {
+        return null;
+    }
 
 }

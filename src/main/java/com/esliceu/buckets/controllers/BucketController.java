@@ -33,6 +33,12 @@ public class BucketController {
         return "redirect:/objects";
     }
 
+    @GetMapping("/objects/{bucket}")
+    public String getObjects(@RequestParam int bucket, Model model){
+        List<Object> objects = bucketService.getObjects(bucket);
+        model.addAttribute("objects", objects);
+        return "objects";
+    }
 
 /*@GetMapping("/objects/{bucket}/**")
     public getObjects(@RequestParam String bucket, HttpServletRequest req){

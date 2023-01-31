@@ -27,4 +27,8 @@ public class BucketService {
     public void createBucket(String name, String nickname) {
         bucketDAO.createBucket(name, nickname, new Date());
     }
+
+    public List<Object> getObjects(int bucket) {
+        return bucketDAO.getObjects(bucket);
+    }
 }
