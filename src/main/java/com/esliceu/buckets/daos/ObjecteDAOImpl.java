@@ -8,15 +8,15 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 @Repository
-public class ObjectDAOImpl implements ObjectDAO {
+public class ObjecteDAOImpl implements ObjecteDAO {
     @Autowired
     JdbcTemplate jdbcTemplate;
 
     private final RowMapper<Objecte> objectRowMapper = (rs, rn) -> {
         Objecte object = new Objecte();
         object.setId(rs.getInt("id"));
-        object.setName(rs.getString("nom"));
-        object.setBucket(rs.getInt("bucket"));
+        object.setName(rs.getString("name"));
+        object.setBucket(rs.getInt("bucketId"));
         return object;
     };
 
@@ -39,7 +39,8 @@ public class ObjectDAOImpl implements ObjectDAO {
 
     @Override
     public List<Objecte> getObjects(int bucket) {
-        return jdbcTemplate.query("SELECT * FROM object WHERE bucketObject = (?)",
+        System.out.println("Bucket: " + bucket);
+        return jdbcTemplate.query("SELECT * FROM objects WHERE bucketId = (?)",
                 new Object[]{bucket}, objectRowMapper);
     }
 }

@@ -1,7 +1,7 @@
 package com.esliceu.buckets.services;
 
 import com.esliceu.buckets.daos.BucketDAO;
-import com.esliceu.buckets.daos.ObjectDAO;
+import com.esliceu.buckets.daos.ObjecteDAO;
 import com.esliceu.buckets.models.Bucket;
 import com.esliceu.buckets.models.Objecte;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,7 @@ public class BucketService {
     @Autowired
     BucketDAO bucketDAO;
     @Autowired
-    ObjectDAO objectDAO;
+    ObjecteDAO objectDAO;
 
     public void updateBucket (int id,String name, String owner, Date createDate){
         bucketDAO.updateBucket(id,name, owner, createDate);
@@ -34,7 +34,7 @@ public class BucketService {
     }
 
     private boolean uniqueName(String name) {
-        List<Bucket> buckets = bucketDAO.getBucketByName(name);
+        List<Bucket> buckets = bucketDAO.getBucketByNameList(name);
         for (Bucket bucket : buckets) {
             if (bucket.getNom().equals(name)) {
                 return false;
@@ -43,7 +43,5 @@ public class BucketService {
         return true;
     }
 
-    public List<Objecte> getObjects(int bucket) {
-        return objectDAO.getObjects(bucket);
-    }
+
 }

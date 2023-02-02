@@ -4,7 +4,7 @@ import com.esliceu.buckets.models.Objecte;
 
 import java.util.List;
 
-public interface ObjectDAO {
+public interface ObjecteDAO {
 void createObject(String name, String bucket);
     void deleteObject(int id);
     void updateObject(int id, String name, String bucket);

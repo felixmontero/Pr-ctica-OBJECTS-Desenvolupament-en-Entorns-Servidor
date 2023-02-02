@@ -59,10 +59,10 @@ public class UserController {
     @GetMapping("/settings")
     public String settings(HttpServletRequest req, Model model){
         HttpSession session = req.getSession();
-        List<User> users = userService.checkUser((String) session.getAttribute("nickname"));
+       /* List<User> users = userService.checkUser((String) session.getAttribute("nickname"));
         User user = users.get(1);
         req.setAttribute("user", user);
-        model.addAttribute("user", user);
+        model.addAttribute("user", user);*/
         return "settings";
     }
 
