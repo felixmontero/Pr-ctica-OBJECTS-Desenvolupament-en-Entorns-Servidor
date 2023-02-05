@@ -50,8 +50,12 @@ public class UserController {
         return "signup";
     }
     @PostMapping("/signup")
-    public String register(@Valid @RequestParam String nickname,@Valid @RequestParam String email,@Valid @RequestParam String password,
-                           @Valid @RequestParam String name,@Valid @RequestParam String surnames){
+    public String register(@Valid @RequestParam String nickname,@Valid @RequestParam String email,@Valid @RequestParam String password,@Valid @RequestParam String password2,
+                           @Valid @RequestParam String name,@Valid @RequestParam String surnames, Model model){
+        if(!password.equals(password2)){
+            model.addAttribute("error", "Passwords do not match");
+            return "signup";
+        }
         userService.register(nickname, email, userService.encrypt(password), name, surnames);
         return "signup";
     }
