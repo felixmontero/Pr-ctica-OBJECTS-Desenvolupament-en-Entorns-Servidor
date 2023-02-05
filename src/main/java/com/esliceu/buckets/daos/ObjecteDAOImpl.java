@@ -39,7 +39,6 @@ public class ObjecteDAOImpl implements ObjecteDAO {
 
     @Override
     public List<Objecte> getObjects(int bucket) {
-        System.out.println("Bucket: " + bucket);
         return jdbcTemplate.query("SELECT * FROM objects WHERE bucketId = (?)",
                 new Object[]{bucket}, objectRowMapper);
     }

@@ -11,5 +11,9 @@ public interface UserDAO {
 
     void register(String nickname, String email, String password, String name, String surnames);
 
-    List<User> checkUser(String nickname);
+    User checkUser(String nickname);
+
+    void updateUser(String nickname, String email, String encrypt, String name, String surnames);
+
+    void deleteUser(String nickname);
 }

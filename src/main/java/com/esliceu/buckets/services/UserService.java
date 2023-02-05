@@ -53,7 +53,15 @@ public class UserService {
 
     }
 
-    public List<User> checkUser(String nickname) {
+    public User checkUser(String nickname) {
         return userDAO.checkUser(nickname);
+    }
+
+    public void updateUser(String nickname, String email, String encrypt, String name, String surnames) {
+        userDAO.updateUser(nickname, email, encrypt, name, surnames);
+    }
+
+    public void deleteUser(String nickname) {
+        userDAO.deleteUser(nickname);
     }
 }

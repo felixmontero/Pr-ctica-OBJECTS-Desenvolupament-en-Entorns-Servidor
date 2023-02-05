@@ -17,10 +17,7 @@ public class ObjecteService {
     BucketDAO bucketDAO;
 
     public List<Objecte> getObjects(String bucket) {
-        System.out.println("Bucket: " + bucket);
         Bucket bucket1= bucketDAO.getBucketByName(bucket);
-        //System.out.println(bucket1.getNom());
         return objectDAO.getObjects(bucket1.getId());
-
     }
 }

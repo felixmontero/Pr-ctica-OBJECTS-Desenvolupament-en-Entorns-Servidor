@@ -38,8 +38,21 @@ public class UserDAOImpl implements UserDAO{
     }
 
     @Override
-    public List<User> checkUser(String nickname) {
-       return jdbcTemplate.query("SELECT * FROM users WHERE nickname = (?) ",
+    public User checkUser(String nickname) {
+       return jdbcTemplate.queryForObject("SELECT * FROM users WHERE nickname = (?) ",
                new Object[]{ nickname}, userRowMapper);
+    }
+
+    @Override
+    public void updateUser(String nickname, String email, String encrypt, String name, String surnames) {
+        jdbcTemplate.update("UPDATE users SET email = (?), password = (?), name = (?), surnames = (?) WHERE nickname = (?)",
+                email, encrypt, name, surnames, nickname);
+    }
+
+    @Override
+    public void deleteUser(String nickname) {
+
+        //delete user on cascade
+        jdbcTemplate.update("DELETE FROM users WHERE nickname = (?)", nickname);
     }
 }

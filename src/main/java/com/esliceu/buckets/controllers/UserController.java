@@ -39,7 +39,7 @@ public class UserController {
         boolean login = userService.login(nickname, userService.encrypt(password));
         if(login){
             session.setAttribute("nickname", nickname);
-            return "redirect:/objects";
+            return "redirect:/settings";
         }
         return "login";
     }
@@ -50,8 +50,8 @@ public class UserController {
         return "signup";
     }
     @PostMapping("/signup")
-    public String register(@Valid @RequestParam String nickname, @RequestParam String email, @RequestParam String password,
-                           @RequestParam String name, @RequestParam String surnames){
+    public String register(@Valid @RequestParam String nickname,@Valid @RequestParam String email,@Valid @RequestParam String password,
+                           @Valid @RequestParam String name,@Valid @RequestParam String surnames){
         userService.register(nickname, email, userService.encrypt(password), name, surnames);
         return "signup";
     }
@@ -59,12 +59,38 @@ public class UserController {
     @GetMapping("/settings")
     public String settings(HttpServletRequest req, Model model){
         HttpSession session = req.getSession();
-       /* List<User> users = userService.checkUser((String) session.getAttribute("nickname"));
-        User user = users.get(1);
-        req.setAttribute("user", user);
-        model.addAttribute("user", user);*/
+
+        User user = userService.checkUser((String) session.getAttribute("nickname"));
+       req.setAttribute("user", user);
+       model.addAttribute("user", user);
         return "settings";
     }
 
+    @PostMapping("/settings")
+    public String settings(@Valid @RequestParam String email,@Valid @RequestParam String password,
+                           @Valid @RequestParam String name,@Valid @RequestParam String surnames, HttpServletRequest req){
+        if(password.equals("")){
+            password = userService.checkUser((String) req.getSession().getAttribute("nickname")).getPassword();
+        }
+        else{
+            password = userService.encrypt(password);
+        }
 
+        userService.updateUser((String) req.getSession().getAttribute("nickname"), email, userService.encrypt(password), name, surnames);
+        return "redirect:/objects";
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest req){
+        HttpSession session = req.getSession();
+        session.invalidate();
+        return "redirect:/";
+    }
+    @PostMapping("/delete")
+    public String delete(HttpServletRequest req){
+        HttpSession session = req.getSession();
+        userService.deleteUser((String) session.getAttribute("nickname"));
+        session.invalidate();
+        return "redirect:/";
+    }
 }
