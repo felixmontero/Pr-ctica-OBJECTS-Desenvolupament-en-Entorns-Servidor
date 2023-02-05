@@ -34,13 +34,14 @@ public class UserController {
         return "login";
     }
     @PostMapping("/login")
-    public String login(@RequestParam String nickname, @RequestParam String password, HttpServletRequest req){
+    public String login(@RequestParam String nickname, @RequestParam String password, HttpServletRequest req, Model model){
         HttpSession session = req.getSession();
         boolean login = userService.login(nickname, userService.encrypt(password));
         if(login){
             session.setAttribute("nickname", nickname);
             return "redirect:/objects";
         }
+        model.addAttribute("error", "Password or nickname incorrect*");
         return "login";
     }
 
@@ -71,8 +72,9 @@ public class UserController {
     }
 
     @PostMapping("/settings")
-    public String settings(@Valid @RequestParam String email,@Valid @RequestParam String password,
-                           @Valid @RequestParam String name,@Valid @RequestParam String surnames, HttpServletRequest req){
+    public String settings(@Valid @RequestParam String email,@Valid @RequestParam String password,@Valid @RequestParam String password2,
+                           @Valid @RequestParam String name,@Valid @RequestParam String surnames, HttpServletRequest req,Model model){
+
         if(password.equals("")){
             password = userService.checkUser((String) req.getSession().getAttribute("nickname")).getPassword();
         }
