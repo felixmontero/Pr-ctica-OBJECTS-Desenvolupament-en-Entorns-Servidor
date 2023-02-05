@@ -58,4 +58,9 @@ public class BucketDAOImpl implements BucketDAO{
                 new Object[]{name}, bucketRowMapper);
     }
 
+    @Override
+    public void deleteBucketByNom(String nom) {
+        jdbcTemplate.update("DELETE FROM bucket WHERE nom = (?)", nom);
+    }
+
 }

@@ -39,7 +39,7 @@ public class UserController {
         boolean login = userService.login(nickname, userService.encrypt(password));
         if(login){
             session.setAttribute("nickname", nickname);
-            return "redirect:/settings";
+            return "redirect:/objects";
         }
         return "login";
     }

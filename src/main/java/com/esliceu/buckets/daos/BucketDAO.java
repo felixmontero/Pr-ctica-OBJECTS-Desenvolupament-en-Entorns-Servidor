@@ -18,4 +18,6 @@ public interface BucketDAO {
     Bucket getBucketByName(String name);
 
     List<Bucket> getBucketByNameList(String name);
+
+    void deleteBucketByNom(String nom);
 }

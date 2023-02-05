@@ -44,4 +44,7 @@ public class BucketService {
     }
 
 
+    public void deleteBucketByNom(String nom) {
+        bucketDAO.deleteBucketByNom(nom);
+    }
 }

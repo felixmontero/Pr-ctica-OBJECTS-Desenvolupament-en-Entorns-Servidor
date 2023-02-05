@@ -35,6 +35,11 @@ public class BucketController {
         bucketService.createBucket(name, nickname);
         return "redirect:/objects";
     }
+    @PostMapping("/deleteBucket/{nom}")
+    public String deleteBucket(@PathVariable String nom){
+        bucketService.deleteBucketByNom(nom);
+        return "redirect:/objects";
+    }
 
 
 }
