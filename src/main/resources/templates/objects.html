@@ -35,22 +35,23 @@
 </nav>
 
     <h1>Objects</h1>
+    <p>bucket:  [[${bucket}]]</p>
+    <form th:action="@{/objects/{bucket} (bucket=${bucket})}" method="post" enctype="multipart/form-data">
 
-    <form action="/objects" method="post" enctype="multipart/form-data">
-        <p>bucket: </p>
         <label for="path">path:</label>
-        <input type="text" name="path" id="path">
+        <input type="text" name="path" id="path" required>
         <label for="file">file:</label>
-        <input type="file" name="file" id="file">
+        <input type="file" name="file" id="file" required>
         <input type="submit" value="Upload">
     </form>
 
-    <table>
-        <tr>
-            <th>Name</th>
+    <table class="table">
+    <thead class="thead-dark">
+        <tr >
+            <th scope="col">Name</th>
         </tr>
         <tr th:each="object : ${objects}">
-            <td>[[${object.name}]]</td>
+            <td scope="row" class="table-light">[[${object.name}]]</td>
         </tr>
     </table>
 

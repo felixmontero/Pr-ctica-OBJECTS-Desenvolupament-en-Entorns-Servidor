@@ -4,7 +4,16 @@ public class Objecte {
 
     private int id;
     private String name;
+    private String user;
     private int bucket;
+
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
+    }
 
     public Objecte() {
     }

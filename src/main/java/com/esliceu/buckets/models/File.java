@@ -4,6 +4,15 @@ public class File {
     private int id;
     private String hash;
     private byte[] content;
+    private int accountant;
+
+    public int getAccountant() {
+        return accountant;
+    }
+
+    public void setAccountant(int accountant) {
+        this.accountant = accountant;
+    }
 
     public int getId() {
         return id;

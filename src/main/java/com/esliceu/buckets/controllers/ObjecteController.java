@@ -1,9 +1,11 @@
 package com.esliceu.buckets.controllers;
 
 import com.esliceu.buckets.models.Objecte;
+import com.esliceu.buckets.models.User;
 import com.esliceu.buckets.services.ObjecteService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -34,15 +36,16 @@ public class ObjecteController {
         return "objects";
     }
     @PostMapping("/objects/{bucket}")
-    public String createObject(@PathVariable String bucket,@RequestParam String path, @RequestParam MultipartFile file,
-                             HttpServletResponse response) throws IOException {
-        System.out.println(bucket);
+    public String createObject(@PathVariable String bucket, @RequestParam String path, @RequestParam MultipartFile file,
+                               HttpServletResponse response, HttpSession session) throws IOException {
+        String nickname = (String) session.getAttribute("nickname");
         try {
-         byte[] uploadfile =file.getBytes();
+           objecteService.createObject(bucket, path, file, nickname);
+         //byte[] uploadfile =file.getBytes();
         } catch (Exception e) {
         e.printStackTrace();
         }
-        return "redirect:objects";
+        return "objects/"+bucket;
 }
 
 
