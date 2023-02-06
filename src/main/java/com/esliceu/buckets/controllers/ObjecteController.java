@@ -45,7 +45,7 @@ public class ObjecteController {
         } catch (Exception e) {
         e.printStackTrace();
         }
-        return "objects/"+bucket;
+        return "redirect:/objects/"+bucket;
 }
 
 
