@@ -116,4 +116,16 @@ public class ObjecteService {
     public boolean checkObject(int bucket, String name){
         return objectDAO.checkObject(bucket, name);
     }
+
+    public Objecte getObject(int objId) {
+        return objectDAO.getObject(objId);
+    }
+
+    public File getFile(int fileId) {
+        return objectDAO.getFile(fileId);
+    }
+
+    public void deleteObject(int objid) {
+        objectDAO.deleteObject(objid);
+    }
 }

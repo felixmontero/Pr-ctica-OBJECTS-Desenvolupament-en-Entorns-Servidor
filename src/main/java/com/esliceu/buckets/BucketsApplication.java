@@ -15,7 +15,7 @@ public class BucketsApplication implements WebMvcConfigurer {
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(new LoginInterceptor())
-				.addPathPatterns("/objects")
+				.addPathPatterns("/objects/*")
 				.addPathPatterns("/deleteBucket/*")
 				.addPathPatterns("/createObject/*")
 				.addPathPatterns("/deleteObject/*")

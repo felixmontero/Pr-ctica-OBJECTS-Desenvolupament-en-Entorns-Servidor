@@ -25,4 +25,8 @@ public interface ObjecteDAO {
     Object getIdFile(String hash);
 
     void createVersion(int id, Date date, Object idFile,int version);
+
+    Objecte getObject(int objId);
+
+    File getFile(int fileId);
 }

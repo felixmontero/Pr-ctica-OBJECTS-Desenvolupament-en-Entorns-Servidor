@@ -1,5 +1,6 @@
 package com.esliceu.buckets.controllers;
 
+import com.esliceu.buckets.models.File;
 import com.esliceu.buckets.models.Objecte;
 import com.esliceu.buckets.models.User;
 import com.esliceu.buckets.services.ObjecteService;
@@ -9,6 +10,7 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -56,16 +58,24 @@ public class ObjecteController {
         return "objects";
     }
 
-
     // create a method to download a file
-    /*@GetMapping("/download")
-    public ResponseEntity<byte[]> download(HttpServletRequest request) {
+    @GetMapping("/download/{objid}/{fid}")
+    public ResponseEntity<byte[]> download(HttpServletRequest request, @PathVariable int objId, @PathVariable int FileId) {
+        Objecte obj = objecteService.getObject(objId);
+        File file = objecteService.getFile(FileId);
+
         byte[] content = file.getContent();
         String name = obj.getName();
         HttpHeaders headers = new HttpHeaders();
-        headers.getContentType(MediaType.Value.of("application/octet-stream"));
+        headers.setContentType(MediaType.valueOf("application/octet-stream"));
         headers.setContentLength(content.length);
         headers.set("Content-Disposition", "attachment; filename=" + name);
         return new ResponseEntity<>(content, headers, HttpStatus.OK);
-    }*/
+    }
+
+    @PostMapping("/deleteObject/{id}")
+    public String deleteObject(@PathVariable int id){
+        objecteService.deleteObject(id);
+        return "redirect:/objects";
+    }
 }

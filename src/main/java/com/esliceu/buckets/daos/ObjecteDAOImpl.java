@@ -80,4 +80,23 @@ public class ObjecteDAOImpl implements ObjecteDAO {
         jdbcTemplate.update("INSERT INTO objectsFile (idFile,idObj,Date,version) VALUES (?,?,?,?)",
                 idFile, id, date,version);
     }
+
+    @Override
+    public Objecte getObject(int objId) {
+        return jdbcTemplate.queryForObject("SELECT * FROM objects WHERE id = (?)",
+                new Object[]{objId}, objectRowMapper);
+    }
+
+    @Override
+    public File getFile(int fileId) {
+        return jdbcTemplate.queryForObject("SELECT * FROM file WHERE id = (?)",
+                new Object[]{fileId}, (rs, rn) -> {
+                    File file = new File();
+                    file.setId(rs.getInt("id"));
+                    file.setHash(rs.getString("hash"));
+                    file.setContent(rs.getBytes("content"));
+                    file.setAccountant(rs.getInt("accountant"));
+                    return file;
+                });
+    }
 }
