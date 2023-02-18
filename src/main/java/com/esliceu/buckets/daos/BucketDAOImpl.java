@@ -63,4 +63,10 @@ public class BucketDAOImpl implements BucketDAO{
         jdbcTemplate.update("DELETE FROM bucket WHERE nom = (?)", nom);
     }
 
+    @Override
+    public boolean BucketsUserExists(String bucket, Object nickname) {
+        return jdbcTemplate.queryForObject("SELECT COUNT(*) FROM bucket WHERE nom = (?) AND owner = (?)",
+                new Object[]{bucket, nickname}, Integer.class) > 0;
+    }
+
 }

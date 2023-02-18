@@ -58,7 +58,7 @@ public class UserController {
             return "signup";
         }
         userService.register(nickname, email, userService.encrypt(password), name, surnames);
-        return "signup";
+        return "redirect:/login";
     }
 
     @GetMapping("/settings")
@@ -82,7 +82,7 @@ public class UserController {
             password = userService.encrypt(password);
         }
 
-        userService.updateUser((String) req.getSession().getAttribute("nickname"), email, userService.encrypt(password), name, surnames);
+        userService.updateUser((String) req.getSession().getAttribute("nickname"), email, password, name, surnames);
         return "redirect:/objects";
     }
 

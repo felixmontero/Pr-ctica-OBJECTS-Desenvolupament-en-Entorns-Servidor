@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.io.ObjectInput;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Date;
@@ -60,25 +61,29 @@ public class ObjecteService {
         }
         Bucket bucket2 =  bucketDAO.getBucketByName(bucket);
         System.out.println(bucket2.getId());
+        String nameObject = path + name;
         //comprobar si existe el objeto
-        if(checkObject(bucket2.getId(), name)){
+        if(checkObject(bucket2.getId(), nameObject)){
             //si existe creamos nueva versión
-            int ObjectID = objectDAO.getIdObject(bucketDAO.getBucketByName(bucket).getId(), name);
-
+            int ObjectID = (int) objectDAO.getIdObject(bucketDAO.getBucketByName(bucket).getId(), name);
+            int FileID = (int) objectDAO.getIdFile(hash);
+            checkVersion( ObjectID, FileID);
             return;
         }else{
             //si no existe, se crea
 
             Objecte objecte = new Objecte();
             objecte.setBucket(bucket2.getId());
-            objecte.setName(name);
+            int FileID = (int) objectDAO.getIdFile(hash);
+            objecte.setName(nameObject);
             objecte.setUser(nickname);
             objectDAO.createObject(objecte);
+            int ObjectID = (int) objectDAO.getIdObject(bucketDAO.getBucketByName(bucket).getId(), nameObject);
             //id del objeto de la base de datos
-            int id = objectDAO.getIdObject(bucket2.getId(), name);
+            int id = (int) objectDAO.getIdObject(bucket2.getId(), nameObject);
             //Añadir versiones
             int version = 1;
-            objectDAO.createVersion(id, new Date(), objectDAO.getIdFile(hash), version);
+            objectDAO.createVersion(FileID, ObjectID, new Date(), version);
 
         }
     }
@@ -123,6 +128,11 @@ public class ObjecteService {
 
     public File getFile(int fileId) {
         return objectDAO.getFile(fileId);
+    }
+
+    public boolean checkVersion(int id, int version){
+        return false;
+        //return objectDAO.checkVersion(id, version);
     }
 
     public void deleteObject(int objid) {

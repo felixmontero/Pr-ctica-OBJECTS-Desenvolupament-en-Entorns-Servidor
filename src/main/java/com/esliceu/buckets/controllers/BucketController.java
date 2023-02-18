@@ -32,6 +32,9 @@ public class BucketController {
     @PostMapping("/objects")
     public String createBucket(@RequestParam String name, HttpSession session){
         String nickname =(String) session.getAttribute("nickname");
+        while (name.contains("/")){
+            name = name.replace("/", "");
+        }
         bucketService.createBucket(name, nickname);
         return "redirect:/objects";
     }

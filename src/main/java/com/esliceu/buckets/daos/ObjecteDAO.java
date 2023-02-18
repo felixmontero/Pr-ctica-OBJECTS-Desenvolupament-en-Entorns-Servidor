@@ -16,7 +16,7 @@ public interface ObjecteDAO {
 
     boolean checkObject(int bucket, String name);
 
-    int getIdObject(int id, String name);
+    Object getIdObject(int id, String name);
 
     void createFile(File file);
 
@@ -24,7 +24,7 @@ public interface ObjecteDAO {
 
     Object getIdFile(String hash);
 
-    void createVersion(int id, Date date, Object idFile,int version);
+    void createVersion(int FileID,int ObjectID, Date date, int version);
 
     Objecte getObject(int objId);
 

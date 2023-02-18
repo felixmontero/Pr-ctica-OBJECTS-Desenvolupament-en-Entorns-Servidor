@@ -49,13 +49,13 @@
     <thead class="thead-dark">
         <tr >
             <th scope="col">Name</th>
-            <th scope="col">Dowload</th>
+            <!--<th scope="col">Dowload</th>-->
             <th scope="col">Delete</th>
 
         </tr>
         <tr th:each="object : ${objects}">
             <td scope="row" class="table-light">[[${object.name}]]</td>
-            <td scope="row" class="table-light"><a th:href="@{/download/{name} (name=${object.name})}">Download</a></td>
+            <!--td scope="row" class="table-light"><a th:href="@{/download/{name} (name=${object.name})}">Download</a></td>-->
             <td scope="row" class="table-light">
             <form th:action="@{/deleteObject/{name} (name=${object.id})}" method="post" onsubmit=" return popup()">
                 <input type="hidden" name="nom" id="nom" value="${bucket.nom}">

@@ -52,9 +52,14 @@ public class ObjecteDAOImpl implements ObjecteDAO {
     }
 
     @Override
-    public int getIdObject(int id, String name) {
-        return jdbcTemplate.queryForObject("SELECT id FROM objects WHERE bucketId = (?) AND name = (?)",
-                new Object[]{id, name}, Integer.class);
+    public Object getIdObject(int id, String nameObject) {
+        //obtener id de un objeto
+        try {
+            return jdbcTemplate.queryForObject("SELECT id FROM objects WHERE bucketId = (?) AND name = (?)",
+                    new Object[]{id, nameObject}, Integer.class);
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     @Override
@@ -76,9 +81,9 @@ public class ObjecteDAOImpl implements ObjecteDAO {
     }
 
     @Override
-    public void createVersion(int id, Date date, Object idFile,int version) {
-        jdbcTemplate.update("INSERT INTO objectsFile (idFile,idObj,Date,version) VALUES (?,?,?,?)",
-                idFile, id, date,version);
+    public void createVersion(int FileID,int ObjectID, Date date,int version) {
+        jdbcTemplate.update("INSERT INTO objectsFile (idFile,idObj,Date,versionx) VALUES (?,?,?,?)",
+               FileID,ObjectID,date,version);
     }
 
     @Override

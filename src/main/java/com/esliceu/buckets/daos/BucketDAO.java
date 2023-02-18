@@ -19,5 +19,7 @@ public interface BucketDAO {
 
     List<Bucket> getBucketByNameList(String name);
 
-    void deleteBucketByNom(String nom);
+     void deleteBucketByNom(String nom);
+
+    boolean BucketsUserExists(String bucket, Object nickname);
 }

@@ -2,7 +2,7 @@ package com.esliceu.buckets.controllers;
 
 import com.esliceu.buckets.models.File;
 import com.esliceu.buckets.models.Objecte;
-import com.esliceu.buckets.models.User;
+import com.esliceu.buckets.services.BucketService;
 import com.esliceu.buckets.services.ObjecteService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -22,20 +22,64 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.HandlerMapping;
 
 import java.io.IOException;
-import java.lang.constant.Constable;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 @Controller
-public class ObjecteController {
+public class    ObjecteController {
     @Autowired
     ObjecteService objecteService;
-
+    @Autowired
+    BucketService bucketService;
     @GetMapping("/objects/{bucket}")
-    public String getObjects(@PathVariable String bucket, Model model){
+    public String getObjects(@PathVariable String bucket, Model model, HttpSession session){
+        if(bucketService.BucketsByUserExists(bucket, session.getAttribute("nickname") )) {
+            List<Objecte> objects = objecteService.getObjects(bucket);
 
-        List<Objecte> objects = objecteService.getObjects(bucket);
-        model.addAttribute("objects", objects);
-        model.addAttribute("bucket", bucket);
-        return "objects";
+
+            List <String> directories = new ArrayList<>();
+            List <String> objectList = new ArrayList<>();
+             /*List<String> directories = new ArrayList<>();
+                List<String> files = new ArrayList<>();
+
+                for (Object object : objects) {
+                    String name = object.getObjectname().substring(1);
+                    String[] segments = name.split("/");
+
+                    if (segments.length > 1) {
+                        if (!directories.contains(segments[0])) {
+                            directories.add(segments[0]);
+                        }
+                    } else {
+                        files.add(name);
+                    }
+                }
+            for(Objecte obj : objects){
+                //el nombre del objeto contiene un /, es un directorio
+
+                if(obj.getName().contains("/")){
+                    directories.add(obj.getName());
+                }else{
+                    objects.add(obj);
+                }
+            }*/
+            /*
+            List<String> sortedDirectories = new ArrayList<>(directories);
+            Collections.sort(sortedDirectories);
+            List<String> sortedDirectoriesList = new ArrayList<>();
+            for (String directory : sortedDirectories) {
+                sortedDirectoriesList.add(directory);
+            }
+            Collections.sort(files);
+            List<String> sortedFiles = new ArrayList<>(files);
+            */
+
+            //model.addAttribute("directories", directories);
+            model.addAttribute("objects", objects);
+            model.addAttribute("bucket", bucket);
+            return "objects";
+        }
+            return "redirect:/objects";
     }
     @PostMapping("/objects/{bucket}")
     public String createObject(@PathVariable String bucket, @RequestParam String path, @RequestParam MultipartFile file,
