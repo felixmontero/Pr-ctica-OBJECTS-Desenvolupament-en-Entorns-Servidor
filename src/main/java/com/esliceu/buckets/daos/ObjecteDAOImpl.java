@@ -82,7 +82,7 @@ public class ObjecteDAOImpl implements ObjecteDAO {
 
     @Override
     public void createVersion(int FileID,int ObjectID, Date date,int version) {
-        jdbcTemplate.update("INSERT INTO objectsFile (idFile,idObj,Date,versionx) VALUES (?,?,?,?)",
+        jdbcTemplate.update("INSERT INTO objectsFile (idFile,idObj,Date,version) VALUES (?,?,?,?)",
                FileID,ObjectID,date,version);
     }
 
@@ -103,5 +103,28 @@ public class ObjecteDAOImpl implements ObjecteDAO {
                     file.setAccountant(rs.getInt("accountant"));
                     return file;
                 });
+    }
+
+    @Override
+    public void incrementAccountant(String hash) {
+        jdbcTemplate.update("UPDATE file SET accountant = accountant + 1 WHERE hash = (?)",
+                hash);
+    }
+
+    @Override
+    public int FileIdByVersion(int objid) {
+        return jdbcTemplate.queryForObject("SELECT idFile FROM objectsFile WHERE idObj = (?)",
+                new Object[]{objid}, Integer.class);
+    }
+
+    @Override
+    public void decrementAccountant(int idFile) {
+        jdbcTemplate.update("UPDATE file SET accountant = accountant - 1 WHERE id = (?)",
+                idFile);
+    }
+
+    @Override
+    public void deleteFile(int idFile) {
+        jdbcTemplate.update("DELETE FROM file WHERE id = (?)", idFile);
     }
 }

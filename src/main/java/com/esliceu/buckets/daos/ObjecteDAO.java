@@ -29,4 +29,12 @@ public interface ObjecteDAO {
     Objecte getObject(int objId);
 
     File getFile(int fileId);
+
+    void incrementAccountant(String hash);
+
+    int FileIdByVersion(int objid);
+
+    void decrementAccountant(int idFile);
+
+    void deleteFile(int idFile);
 }

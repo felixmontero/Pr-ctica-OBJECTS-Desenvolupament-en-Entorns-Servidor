@@ -49,6 +49,7 @@ public class ObjecteService {
         //mirar si File existe
         if(checkFile(hash)){
             //si existe, no se crea
+            objectDAO.incrementAccountant(hash);
 
         }else{
             //si no existe, se crea
@@ -60,7 +61,6 @@ public class ObjecteService {
 
         }
         Bucket bucket2 =  bucketDAO.getBucketByName(bucket);
-        System.out.println(bucket2.getId());
         String nameObject = path + name;
         //comprobar si existe el objeto
         if(checkObject(bucket2.getId(), nameObject)){
@@ -136,6 +136,14 @@ public class ObjecteService {
     }
 
     public void deleteObject(int objid) {
-        objectDAO.deleteObject(objid);
+
+        int idFile = objectDAO.FileIdByVersion(objid);
+        File file = objectDAO.getFile(idFile);
+        if(file.getAccountant() == 1) {
+            objectDAO.deleteFile(idFile);
+        }else{
+            objectDAO.decrementAccountant(idFile);
+            objectDAO.deleteObject(objid);
+        }
     }
 }
