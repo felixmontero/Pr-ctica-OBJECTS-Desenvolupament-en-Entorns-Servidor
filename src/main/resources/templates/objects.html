@@ -62,21 +62,21 @@
             <th scope="col">Delete</th>
 
         </tr>
-            <tr th:each="d : ${directories}" class="directory">
+            <tr th:each="directory : ${directories}" class="directory">
                 <td scope="row" class="table-light">
-                    <a th:href="@{ /objects/{bucket}/{directory}/ (bucket=${bucket}, directory=${d}) }" th:text="${d}+'/'"></a>
+                    <a th:href="@{ /objects/{bucket}/{directory}/ (bucket=${bucket}, directory=${directory}) }" th:text="${directory}+'/'"></a>
                 </td>
 
                 <td></td>
 
             </tr>
 
-            <tr th:each="f : ${files}" class="file">
+            <tr th:each="file : ${files}" class="file">
                 <td scope="row" class="table-light">
-                    <a th:href="@{ /objects/{bucket}/{file} (bucket=${bucket}, file=${f}) }" th:text="${f}"></a>
+                    <a th:href="@{ /objects/{bucket}/{file} (bucket=${bucket}, file=${file}) }" th:text="${file}"></a>
                 </td>
                 <td scope="row" class="table-light">
-                    <form th:action="@{/deleteObject/{name}/{bucket} (name=${f}, bucket=${bucket})}" method="post" onsubmit=" return popup()">
+                    <form th:action="@{/deleteObject/{name}/{bucket} (name=${file}, bucket=${bucket})}" method="post" onsubmit=" return popup()">
                         <input type="hidden" name="nom" id="nom" th:value="${bucket}">
                         <input type="submit" value="Delete Object" class="btn btn-dark">
                     </form>

@@ -40,11 +40,11 @@ public class    ObjecteController {
 
                 for (Objecte objecte : objects) {
                     String name = objecte.getName();
-                    String[] segments = name.split("/");
+                    String[] split = name.split("/");
 
-                    if (segments.length > 1) {
-                        if (!directories.contains(segments[0])) {
-                            directories.add(segments[0]);
+                    if (split.length > 1) {
+                        if (!directories.contains(split[0])) {
+                            directories.add(split[0]);
                         }
                     } else {
                         objectFiles.add(name);
@@ -94,10 +94,20 @@ public class    ObjecteController {
 
 
     @GetMapping("/objects/{bucket}/**")
-    public String getObjects(@RequestParam String bucket, HttpServletRequest req){
-        String path = (String) req.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE);
+    public String getObjectsVersions(@PathVariable String bucket, HttpServletRequest req, Model model, HttpSession session){
+        if(bucketService.BucketsByUserExists(bucket, session.getAttribute("nickname") )) {
 
-        return "objects";
+            String path = (String) req.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE);
+            //if(){
+               // return "redirect:/objects/"+bucket;
+            //}
+            //if(){
+            // return "versions";
+            //}
+
+        }
+        return "homepage";
+
     }
 
     // create a method to download a file
@@ -125,4 +135,7 @@ public class    ObjecteController {
         objecteService.deleteObjectByPath(name, bucket);
         return "redirect:/objects";
     }
+
+
+
 }
