@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.io.ObjectInput;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Date;
@@ -45,11 +44,12 @@ public class ObjecteService {
             path = path.replace("//", "/");
         }
 
-
+        boolean countant = false;
         //mirar si File existe
         if(checkFile(hash)){
             //si existe, no se crea
             objectDAO.incrementAccountant(hash);
+            countant = true;
 
         }else{
             //si no existe, se crea
@@ -65,10 +65,18 @@ public class ObjecteService {
         //comprobar si existe el objeto
         if(checkObject(bucket2.getId(), nameObject)){
             //si existe creamos nueva versión
-            int ObjectID = (int) objectDAO.getIdObject(bucketDAO.getBucketByName(bucket).getId(), name);
+            int ObjectID = (int) objectDAO.getIdObject(bucketDAO.getBucketByName(bucket).getId(), nameObject);
+            if(countant){
+                objectDAO.decrementAccountantByHash(hash);
+            }
+
             int FileID = (int) objectDAO.getIdFile(hash);
-            checkVersion( ObjectID, FileID);
-            return;
+            if(checkVersionsAlreadyExists(ObjectID, FileID)){
+
+            }else{
+                int version = objectDAO.getVersions(ObjectID).size() + 1;
+                objectDAO.createVersion(FileID, ObjectID, new Date(), version);
+            }
         }else{
             //si no existe, se crea
 
@@ -84,7 +92,6 @@ public class ObjecteService {
             //Añadir versiones
             int version = 1;
             objectDAO.createVersion(FileID, ObjectID, new Date(), version);
-
         }
     }
 
@@ -130,13 +137,18 @@ public class ObjecteService {
         return objectDAO.getFile(fileId);
     }
 
-    public boolean checkVersion(int id, int version){
+    public boolean checkVersionsAlreadyExists(int ObjectID, int FileID){
+      List<ObjecteVersions> listVersions = objectDAO.getVersions(ObjectID);
+
+      ObjecteVersions LastVersion = listVersions.get(0);
+
+      if(LastVersion.getIdFile() == FileID){
+          return true;
+      }
         return false;
-        //return objectDAO.checkVersion(id, version);
     }
 
     public void deleteObject(int objid) {
-
         int idFile = objectDAO.FileIdByVersion(objid);
         File file = objectDAO.getFile(idFile);
         if(file.getAccountant() == 1) {
@@ -144,6 +156,21 @@ public class ObjecteService {
         }else{
             objectDAO.decrementAccountant(idFile);
             objectDAO.deleteObject(objid);
+        }
+    }
+
+    public void deleteObjectByPath(String name, String bucket) {
+        Bucket bucket1 =bucketDAO.getBucketByName(bucket);
+        int idObj = objectDAO.getIdObjectByName(name, bucket1.getId());
+        int idFile = objectDAO.FileIdByVersion(idObj);
+        File file = objectDAO.getFile(idFile);
+        if(file.getAccountant() == 1) {
+            objectDAO.deleteFile(idFile);
+            objectDAO.deleteObject(idObj);
+
+        }else{
+            objectDAO.decrementAccountant(idFile);
+            objectDAO.deleteObject(idObj);
         }
     }
 }

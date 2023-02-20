@@ -14,10 +14,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.HandlerMapping;
 
@@ -38,12 +35,11 @@ public class    ObjecteController {
 
 
             List <String> directories = new ArrayList<>();
-            List <String> objectList = new ArrayList<>();
-             /*List<String> directories = new ArrayList<>();
-                List<String> files = new ArrayList<>();
+            List <String> objectFiles = new ArrayList<>();
 
-                for (Object object : objects) {
-                    String name = object.getObjectname().substring(1);
+
+                for (Objecte objecte : objects) {
+                    String name = objecte.getName();
                     String[] segments = name.split("/");
 
                     if (segments.length > 1) {
@@ -51,31 +47,33 @@ public class    ObjecteController {
                             directories.add(segments[0]);
                         }
                     } else {
-                        files.add(name);
+                        objectFiles.add(name);
                     }
                 }
+
+            /*
             for(Objecte obj : objects){
                 //el nombre del objeto contiene un /, es un directorio
 
                 if(obj.getName().contains("/")){
                     directories.add(obj.getName());
                 }else{
-                    objects.add(obj);
+                    objectFiles.add(obj.getName());
                 }
             }*/
-            /*
+
             List<String> sortedDirectories = new ArrayList<>(directories);
             Collections.sort(sortedDirectories);
             List<String> sortedDirectoriesList = new ArrayList<>();
             for (String directory : sortedDirectories) {
                 sortedDirectoriesList.add(directory);
             }
-            Collections.sort(files);
-            List<String> sortedFiles = new ArrayList<>(files);
-            */
+            Collections.sort(objectFiles);
+            List<String> sortedFiles = new ArrayList<>(objectFiles);
 
-            //model.addAttribute("directories", directories);
-            model.addAttribute("objects", objects);
+
+            model.addAttribute("files", sortedFiles);
+            model.addAttribute("directories", sortedDirectoriesList);
             model.addAttribute("bucket", bucket);
             return "objects";
         }
@@ -117,9 +115,14 @@ public class    ObjecteController {
         return new ResponseEntity<>(content, headers, HttpStatus.OK);
     }
 
-    @PostMapping("/deleteObject/{id}")
+   /* @PostMapping("/deleteObject/{id}")
     public String deleteObject(@PathVariable int id){
         objecteService.deleteObject(id);
+        return "redirect:/objects";
+    }*/
+    @PostMapping("/deleteObject/{name}/{bucket}")
+    public String deleteObjectByName(@PathVariable String name, @PathVariable String bucket){
+        objecteService.deleteObjectByPath(name, bucket);
         return "redirect:/objects";
     }
 }

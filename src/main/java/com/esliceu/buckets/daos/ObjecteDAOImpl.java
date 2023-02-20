@@ -2,6 +2,7 @@ package com.esliceu.buckets.daos;
 
 import com.esliceu.buckets.models.File;
 import com.esliceu.buckets.models.Objecte;
+import com.esliceu.buckets.models.ObjecteVersions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -124,7 +125,35 @@ public class ObjecteDAOImpl implements ObjecteDAO {
     }
 
     @Override
+    public void decrementAccountantByHash(String hash) {
+        jdbcTemplate.update("UPDATE file SET accountant = accountant - 1 WHERE hash = (?)",
+                hash);
+    }
+
+
+    @Override
     public void deleteFile(int idFile) {
         jdbcTemplate.update("DELETE FROM file WHERE id = (?)", idFile);
     }
+
+    @Override
+    public List<ObjecteVersions> getVersions(int objectID) {
+        return jdbcTemplate.query("SELECT * FROM objectsFile WHERE idObj = (?) ORDER BY version DESC",
+                new Object[]{objectID}, (rs, rn) -> {
+                    ObjecteVersions objecteVersions = new ObjecteVersions();
+                    objecteVersions.setIdFile(rs.getInt("idFile"));
+                    objecteVersions.setIdObjecte(rs.getInt("idObj"));
+                    objecteVersions.setDate(rs.getDate("Date"));
+                    objecteVersions.setVersion(rs.getInt("version"));
+                    return objecteVersions;
+                });
+    }
+
+    @Override
+    public int getIdObjectByName(String name, int bucketId) {
+        return jdbcTemplate.queryForObject("SELECT id FROM objects WHERE name = (?) AND bucketId = (?)",
+               new Object[]{name, bucketId}, Integer.class);
+
+    }
+
 }

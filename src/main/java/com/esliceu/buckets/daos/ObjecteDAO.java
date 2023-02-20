@@ -2,6 +2,7 @@ package com.esliceu.buckets.daos;
 
 import com.esliceu.buckets.models.File;
 import com.esliceu.buckets.models.Objecte;
+import com.esliceu.buckets.models.ObjecteVersions;
 
 import java.util.Date;
 import java.util.List;
@@ -35,6 +36,12 @@ public interface ObjecteDAO {
     int FileIdByVersion(int objid);
 
     void decrementAccountant(int idFile);
+    void decrementAccountantByHash(String hash);
 
     void deleteFile(int idFile);
+
+
+    List<ObjecteVersions> getVersions(int objectID);
+
+    int getIdObjectByName(String name, int bucketId);
 }
